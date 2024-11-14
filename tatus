@@ -1,0 +1,796 @@
+[33mcommit 948bdb3da8e8bd3c16f28b2b26ba638614a8a845[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m
+Author: Md Ashif Babu <md.asif.dev@gmail.com>
+Date:   Thu Nov 14 18:40:37 2024 +0600
+
+    Initial commit
+
+[1mdiff --git a/.env b/.env[m
+[1mnew file mode 100644[m
+[1mindex 0000000..31f8757[m
+[1m--- /dev/null[m
+[1m+++ b/.env[m
+[36m@@ -0,0 +1,8 @@[m
+[32m+[m[32m# BDFARE API Configuration[m
+[32m+[m[32mBDFARE_BASE_URL="https://bdf.centralindia.cloudapp.azure.com/api/enterprise"[m
+[32m+[m[32mBDFARE_API_KEY="UEwqVXJHJjBXTE5pN0VwKi1WayF2R29UTmNaaTRLX1lVZFRzM09PNVNuMjAkQHkyVFUyI0FOR1JzRm1yQ0g3IQ=="[m
+[32m+[m
+[32m+[m[32m# FLYHUB API Configuration[m
+[32m+[m[32mFLYHUB_USERNAME=thecityflyers@Gmail.com[m
+[32m+[m[32mFLYHUB_API_KEY=g5TiX28v20Dg6BXkLpuTNUk7vEFCFo9igmOwXNvZulqKCoBHcO[m
+[32m+[m[32mFLYHUB_PRODUCTION_URL=https://api.flyhub.com/api/v1/[m
+\ No newline at end of file[m
+[1mdiff --git a/README.md b/README.md[m
+[1mnew file mode 100644[m
+[1mindex 0000000..05e61e6[m
+Binary files /dev/null and b/README.md differ
+[1mdiff --git a/__init__.py b/__init__.py[m
+[1mnew file mode 100644[m
+[1mindex 0000000..e69de29[m
+[1mdiff --git a/__pycache__/main.cpython-313.pyc b/__pycache__/main.cpython-313.pyc[m
+[1mnew file mode 100644[m
+[1mindex 0000000..09973cf[m
+Binary files /dev/null and b/__pycache__/main.cpython-313.pyc differ
+[1mdiff --git a/app/__init__.py b/app/__init__.py[m
+[1mnew file mode 100644[m
+[1mindex 0000000..99049ee[m
+[1m--- /dev/null[m
+[1m+++ b/app/__init__.py[m
+[36m@@ -0,0 +1 @@[m
+[32m+[m[32m# This file can be empty, it just marks the directory as a Python package[m[41m [m
+\ No newline at end of file[m
+[1mdiff --git a/app/__pycache__/__init__.cpython-313.pyc b/app/__pycache__/__init__.cpython-313.pyc[m
+[1mnew file mode 100644[m
+[1mindex 0000000..b393582[m
+Binary files /dev/null and b/app/__pycache__/__init__.cpython-313.pyc differ
+[1mdiff --git a/app/bus_services/__init__.py b/app/bus_services/__init__.py[m
+[1mnew file mode 100644[m
+[1mindex 0000000..e69de29[m
+[1mdiff --git a/app/bus_services/__pycache__/__init__.cpython-313.pyc b/app/bus_services/__pycache__/__init__.cpython-313.pyc[m
+[1mnew file mode 100644[m
+[1mindex 0000000..df44ab0[m
+Binary files /dev/null and b/app/bus_services/__pycache__/__init__.cpython-313.pyc differ
+[1mdiff --git a/app/bus_services/__pycache__/models.cpython-313.pyc b/app/bus_services/__pycache__/models.cpython-313.pyc[m
+[1mnew file mode 100644[m
+[1mindex 0000000..e197a8a[m
+Binary files /dev/null and b/app/bus_services/__pycache__/models.cpython-313.pyc differ
+[1mdiff --git a/app/bus_services/__pycache__/routes.cpython-313.pyc b/app/bus_services/__pycache__/routes.cpython-313.pyc[m
+[1mnew file mode 100644[m
+[1mindex 0000000..c9947f3[m
+Binary files /dev/null and b/app/bus_services/__pycache__/routes.cpython-313.pyc differ
+[1mdiff --git a/app/bus_services/main.py b/app/bus_services/main.py[m
+[1mnew file mode 100644[m
+[1mindex 0000000..e69de29[m
+[1mdiff --git a/app/bus_services/models.py b/app/bus_services/models.py[m
+[1mnew file mode 100644[m
+[1mindex 0000000..700c455[m
+[1m--- /dev/null[m
+[1m+++ b/app/bus_services/models.py[m
+[36m@@ -0,0 +1,8 @@[m
+[32m+[m[32mfrom pydantic import BaseModel[m
+[32m+[m[32mfrom datetime import date[m
+[32m+[m
+[32m+[m[32mclass BusSearchRequest(BaseModel):[m
+[32m+[m[32m    origin: str[m
+[32m+[m[32m    destination: str[m
+[32m+[m[32m    travel_date: date[m
+[32m+[m
+[1mdiff --git a/app/bus_services/routes.py b/app/bus_services/routes.py[m
+[1mnew file mode 100644[m
+[1mindex 0000000..63ceec8[m
+[1m--- /dev/null[m
+[1m+++ b/app/bus_services/routes.py[m
+[36m@@ -0,0 +1,14 @@[m
+[32m+[m[32mfrom fastapi import APIRouter, Query[m
+[32m+[m[32mfrom .models import BusSearchRequest[m
+[32m+[m
+[32m+[m[32mbus_router = APIRouter()[m
+[32m+[m
+[32m+[m[32m@bus_router.get("/search")[m
+[32m+[m[32mdef search_buses(origin: str = Query(...), destination: str = Query(...), travel_date: str = Query(...)):[m
+[32m+[m[32m    # Placeholder for bus search logic[m
+[32m+[m[32m    return {"message": "Bus search results", "origin": origin, "destination": destination, "travel_date": travel_date}[m
+[32m+[m
+[32m+[m[32m@bus_router.get("/{bus_id}")[m
+[32m+[m[32mdef get_bus_details(bus_id: int):[m
+[32m+[m[32m    # Placeholder for retrieving bus details[m
+[32m+[m[32m    return {"message": "Bus details", "bus_id": bus_id}[m
+[1mdiff --git a/app/car_services/__init__.py b/app/car_services/__init__.py[m
+[1mnew file mode 100644[m
+[1mindex 0000000..e69de29[m
+[1mdiff --git a/app/car_services/__pycache__/__init__.cpython-313.pyc b/app/car_services/__pycache__/__init__.cpython-313.pyc[m
+[1mnew file mode 100644[m
+[1mindex 0000000..99f3e60[m
+Binary files /dev/null and b/app/car_services/__pycache__/__init__.cpython-313.pyc differ
+[1mdiff --git a/app/car_services/__pycache__/models.cpython-313.pyc b/app/car_services/__pycache__/models.cpython-313.pyc[m
+[1mnew file mode 100644[m
+[1mindex 0000000..1ecb43d[m
+Binary files /dev/null and b/app/car_services/__pycache__/models.cpython-313.pyc differ
+[1mdiff --git a/app/car_services/__pycache__/routes.cpython-313.pyc b/app/car_services/__pycache__/routes.cpython-313.pyc[m
+[1mnew file mode 100644[m
+[1mindex 0000000..37a12c3[m
+Binary files /dev/null and b/app/car_services/__pycache__/routes.cpython-313.pyc differ
+[1mdiff --git a/app/car_services/main.py b/app/car_services/main.py[m
+[1mnew file mode 100644[m
+[1mindex 0000000..e69de29[m
+[1mdiff --git a/app/car_services/models.py b/app/car_services/models.py[m
+[1mnew file mode 100644[m
+[1mindex 0000000..ade47a8[m
+[1m--- /dev/null[m
+[1m+++ b/app/car_services/models.py[m
+[36m@@ -0,0 +1,7 @@[m
+[32m+[m[32mfrom pydantic import BaseModel[m
+[32m+[m
+[32m+[m[32mclass CarSearchRequest(BaseModel):[m
+[32m+[m[32m    pickup_location: str[m
+[32m+[m[32m    dropoff_location: str[m
+[32m+[m[32m    pickup_date: str[m
+[32m+[m[32m    dropoff_date: str[m
+[1mdiff --git a/app/car_services/routes.py b/app/car_services/routes.py[m
+[1mnew file mode 100644[m
+[1mindex 0000000..1d224de[m
+[1m--- /dev/null[m
+[1m+++ b/app/car_services/routes.py[m
+[36m@@ -0,0 +1,14 @@[m
+[32m+[m[32mfrom fastapi import APIRouter, Query[m
+[32m+[m[32mfrom .models import CarSearchRequest[m
+[32m+[m
+[32m+[m[32mcar_router = APIRouter()[m
+[32m+[m
+[32m+[m[32m@car_router.get("/search")[m
+[32m+[m[32mdef search_cars(pickup_location: str = Query(...), dropoff_location: str = Query(...), pickup_date: str = Query(...), dropoff_date: str = Query(...)):[m
+[32m+[m[32m    # Placeholder for car rental search logic[m
+[32m+[m[32m    return {"message": "Car search results", "pickup_location": pickup_location, "dropoff_location": dropoff_location, "pickup_date": pickup_date, "dropoff_date": dropoff_date}[m
+[32m+[m
+[32m+[m[32m@car_router.get("/{car_id}")[m
+[32m+[m[32mdef get_car_details(car_id: int):[m
+[32m+[m[32m    # Placeholder for retrieving car rental details[m
+[32m+[m[32m    return {"message": "Car details", "car_id": car_id}[m
+[1mdiff --git a/app/event_services/__init__.py b/app/event_services/__init__.py[m
+[1mnew file mode 100644[m
+[1mindex 0000000..e69de29[m
+[1mdiff --git a/app/event_services/__pycache__/__init__.cpython-313.pyc b/app/event_services/__pycache__/__init__.cpython-313.pyc[m
+[1mnew file mode 100644[m
+[1mindex 0000000..be0a488[m
+Binary files /dev/null and b/app/event_services/__pycache__/__init__.cpython-313.pyc differ
+[1mdiff --git a/app/event_services/__pycache__/models.cpython-313.pyc b/app/event_services/__pycache__/models.cpython-313.pyc[m
+[1mnew file mode 100644[m
+[1mindex 0000000..356203b[m
+Binary files /dev/null and b/app/event_services/__pycache__/models.cpython-313.pyc differ
+[1mdiff --git a/app/event_services/__pycache__/routes.cpython-313.pyc b/app/event_services/__pycache__/routes.cpython-313.pyc[m
+[1mnew file mode 100644[m
+[1mindex 0000000..83721a0[m
+Binary files /dev/null and b/app/event_services/__pycache__/routes.cpython-313.pyc differ
+[1mdiff --git a/app/event_services/main.py b/app/event_services/main.py[m
+[1mnew file mode 100644[m
+[1mindex 0000000..e69de29[m
+[1mdiff --git a/app/event_services/models.py b/app/event_services/models.py[m
+[1mnew file mode 100644[m
+[1mindex 0000000..43dc264[m
+[1m--- /dev/null[m
+[1m+++ b/app/event_services/models.py[m
+[36m@@ -0,0 +1,7 @@[m
+[32m+[m[32mfrom pydantic import BaseModel[m
+[32m+[m[32mfrom datetime import date[m
+[32m+[m
+[32m+[m[32mclass EventSearchRequest(BaseModel):[m
+[32m+[m[32m    location: str[m
+[32m+[m[32m    event_date: date[m
+[32m+[m[32m    category: str[m
+[1mdiff --git a/app/event_services/routes.py b/app/event_services/routes.py[m
+[1mnew file mode 100644[m
+[1mindex 0000000..d7af49c[m
+[1m--- /dev/null[m
+[1m+++ b/app/event_services/routes.py[m
+[36m@@ -0,0 +1,14 @@[m
+[32m+[m[32mfrom fastapi import APIRouter, Query[m
+[32m+[m[32mfrom .models import EventSearchRequest[m
+[32m+[m
+[32m+[m[32mevent_router = APIRouter()[m
+[32m+[m
+[32m+[m[32m@event_router.get("/search")[m
+[32m+[m[32mdef search_events(location: str = Query(...), event_date: str = Query(...), category: str = Query(...)):[m
+[32m+[m[32m    # Placeholder for event search logic[m
+[32m+[m[32m    return {"message": "Event search results", "location": location, "event_date": event_date, "category": category}[m
+[32m+[m
+[32m+[m[32m@event_router.get("/{event_id}")[m
+[32m+[m[32mdef get_event_details(event_id: int):[m
+[32m+[m[32m    # Placeholder for retrieving event details[m
+[32m+[m[32m    return {"message": "Event details", "event_id": event_id}[m
+[1mdiff --git a/app/flight_services/__init__.py b/app/flight_services/__init__.py[m
+[1mnew file mode 100644[m
+[1mindex 0000000..99049ee[m
+[1m--- /dev/null[m
+[1m+++ b/app/flight_services/__init__.py[m
+[36m@@ -0,0 +1 @@[m
+[32m+[m[32m# This file can be empty, it just marks the directory as a Python package[m[41m [m
+\ No newline at end of file[m
+[1mdiff --git a/app/flight_services/__pycache__/__init__.cpython-313.pyc b/app/flight_services/__pycache__/__init__.cpython-313.pyc[m
+[1mnew file mode 100644[m
+[1mindex 0000000..f64db8a[m
+Binary files /dev/null and b/app/flight_services/__pycache__/__init__.cpython-313.pyc differ
+[1mdiff --git a/app/flight_services/clients/__init__.py b/app/flight_services/clients/__init__.py[m
+[1mnew file mode 100644[m
+[1mindex 0000000..e69de29[m
+[1mdiff --git a/app/flight_services/clients/__pycache__/__init__.cpython-313.pyc b/app/flight_services/clients/__pycache__/__init__.cpython-313.pyc[m
+[1mnew file mode 100644[m
+[1mindex 0000000..725c698[m
+Binary files /dev/null and b/app/flight_services/clients/__pycache__/__init__.cpython-313.pyc differ
+[1mdiff --git a/app/flight_services/clients/__pycache__/bdfare_client.cpython-313.pyc b/app/flight_services/clients/__pycache__/bdfare_client.cpython-313.pyc[m
+[1mnew file mode 100644[m
+[1mindex 0000000..bd07de7[m
+Binary files /dev/null and b/app/flight_services/clients/__pycache__/bdfare_client.cpython-313.pyc differ
+[1mdiff --git a/app/flight_services/clients/__pycache__/flyhub_client.cpython-313.pyc b/app/flight_services/clients/__pycache__/flyhub_client.cpython-313.pyc[m
+[1mnew file mode 100644[m
+[1mindex 0000000..5caed9c[m
+Binary files /dev/null and b/app/flight_services/clients/__pycache__/flyhub_client.cpython-313.pyc differ
+[1mdiff --git a/app/flight_services/clients/bdfare_client.py b/app/flight_services/clients/bdfare_client.py[m
+[1mnew file mode 100644[m
+[1mindex 0000000..1a008e7[m
+[1m--- /dev/null[m
+[1m+++ b/app/flight_services/clients/bdfare_client.py[m
+[36m@@ -0,0 +1,63 @@[m
+[32m+[m[32mimport requests[m
+[32m+[m[32mimport os[m
+[32m+[m[32mimport logging[m
+[32m+[m[32mfrom fastapi import HTTPException[m
+[32m+[m
+[32m+[m[32mclass BDFAREClient:[m
+[32m+[m[32m    def __init__(self):[m
+[32m+[m[32m        # Read environment variables[m
+[32m+[m[32m        self.base_url = os.getenv("BDFARE_BASE_URL")[m
+[32m+[m[32m        self.apikey = os.getenv("BDFARE_API_KEY")[m
+[32m+[m[32m        self.token = None[m
+[32m+[m[41m        [m
+[32m+[m[32m        # Ensure that the required environment variables are set[m
+[32m+[m[32m        if not self.base_url or not self.apikey:[m
+[32m+[m[32m            logging.error("BDFARE_BASE_URL or BDFARE_API_KEY is not set in the environment variables.")[m
+[32m+[m[32m            raise HTTPException(status_code=500, detail="API configuration is missing")[m
+[32m+[m
+[32m+[m[32m        logging.info("Initializing BDFAREClient")[m
+[32m+[m[32m        self.authenticate()[m
+[32m+[m
+[32m+[m[32m    def authenticate(self):[m
+[32m+[m[32m        url = f"{self.base_url}/Authenticate"[m
+[32m+[m[32m        headers = {"Content-Type": "application/json"}[m
+[32m+[m[32m        data = {"apikey": self.apikey}[m
+[32m+[m
+[32m+[m[32m        try:[m
+[32m+[m[32m            logging.info("Attempting to authenticate with BDFARE")[m
+[32m+[m[32m            response = requests.post(url, headers=headers, json=data)[m
+[32m+[m[32m            response.raise_for_status()  # Will raise HTTPError for bad responses[m
+[32m+[m[32m            logging.debug(f"Authentication response: {response.json()}")  # Log full response for debugging[m
+[32m+[m[32m            self.token = response.json().get("TokenId")[m
+[32m+[m[32m            if not self.token:[m
+[32m+[m[32m                raise ValueError("Token not found in authentication response.")[m
+[32m+[m[32m            logging.info(f"Authentication successful, token received: {self.token}")[m
+[32m+[m[32m        except requests.exceptions.RequestException as e:[m
+[32m+[m[32m            logging.error(f"Authentication failed: {e}")[m
+[32m+[m[32m            raise HTTPException(status_code=500, detail=f"Authentication failed: {e}")[m
+[32m+[m[32m        except ValueError as e:[m
+[32m+[m[32m            logging.error(f"Authentication failed: {e}")[m
+[32m+[m[32m            raise HTTPException(status_code=500, detail=f"Authentication failed: {e}")[m
+[32m+[m
+[32m+[m[32m    def get_balance(self):[m
+[32m+[m[32m        if not self.token:[m
+[32m+[m[32m            logging.info("Token missing, re-authenticating.")[m
+[32m+[m[32m            self.authenticate()[m
+[32m+[m
+[32m+[m[32m        url = f"{self.base_url}/GetBalance"[m
+[32m+[m[32m        headers = {[m
+[32m+[m[32m            "Authorization": f"Bearer {self.token}",[m
+[32m+[m[32m            "Content-Type": "application/json"[m
+[32m+[m[32m        }[m
+[32m+[m[32m        data = {"UserName": self.apikey}  # Confirm payload structure from API documentation[m
+[32m+[m
+[32m+[m[32m        try:[m
+[32m+[m[32m            logging.info("Requesting balance from BDFARE")[m
+[32m+[m[32m            response = requests.post(url, headers=headers, json=data)[m
+[32m+[m[32m            response.raise_for_status()  # Check for HTTP errors[m
+[32m+[m[32m            logging.debug(f"Balance response: {response.json()}")  # Log full response for debugging[m
+[32m+[m[32m            logging.info("Balance request successful")[m
+[32m+[m[32m            return response.json()[m
+[32m+[m[32m        except requests.exceptions.RequestException as e:[m
+[32m+[m[32m            logging.error(f"Failed to get balance: {e}")[m
+[32m+[m[32m            raise HTTPException(status_code=500, detail=f"Failed to get balance: {e}")[m
+[1mdiff --git a/app/flight_services/clients/flyhub_client.py b/app/flight_services/clients/flyhub_client.py[m
+[1mnew file mode 100644[m
+[1mindex 0000000..8aefd08[m
+[1m--- /dev/null[m
+[1m+++ b/app/flight_services/clients/flyhub_client.py[m
+[36m@@ -0,0 +1,41 @@[m
+[32m+[m[32mimport requests[m
+[32m+[m[32mimport os[m
+[32m+[m
+[32m+[m[32mclass FlyhubClient:[m
+[32m+[m[32m    def __init__(self):[m
+[32m+[m[32m        self.base_url = "https://api.flyhub.com/api/v1"[m
+[32m+[m[32m        self.username = os.getenv("FLYHUB_USERNAME")[m
+[32m+[m[32m        self.apikey = os.getenv("FLYHUB_APIKEY")[m
+[32m+[m[32m        self.token = self.authenticate()[m
+[32m+[m
+[32m+[m[32mdef authenticate(self):[m
+[32m+[m[32m    # Ensure there are no extra quotes in the base URL or endpoint[m
+[32m+[m[32m    url = f"{self.base_url}/Authenticate"[m
+[32m+[m[32m    headers = {"Content-Type": "application/json"}[m
+[32m+[m[32m    data = {"apikey": self.apikey}[m
+[32m+[m
+[32m+[m[32m    try:[m
+[32m+[m[32m        logging.info("Attempting to authenticate with BDFARE")[m
+[32m+[m[32m        response = requests.post(url, headers=headers, json=data)[m
+[32m+[m[32m        response.raise_for_status()  # Will raise HTTPError for bad responses[m
+[32m+[m[32m        logging.debug(f"Authentication response: {response.json()}")  # Log full response for debugging[m
+[32m+[m[32m        self.token = response.json().get("TokenId")[m
+[32m+[m[32m        if not self.token:[m
+[32m+[m[32m            raise ValueError("Token not found in authentication response.")[m
+[32m+[m[32m        logging.info(f"Authentication successful, token received: {self.token}")[m
+[32m+[m[32m    except requests.exceptions.RequestException as e:[m
+[32m+[m[32m        logging.error(f"Authentication failed: {e}")[m
+[32m+[m[32m        raise HTTPException(status_code=500, detail=f"Authentication failed: {e}")[m
+[32m+[m[32m    except ValueError as e:[m
+[32m+[m[32m        logging.error(f"Authentication failed: {e}")[m
+[32m+[m[32m        raise HTTPException(status_code=500, detail=f"Authentication failed: {e}")[m
+[32m+[m
+[32m+[m[32m    def get_balance(self):[m
+[32m+[m[32m        url = f"{self.base_url}/GetBalance"[m
+[32m+[m[32m        headers = {[m
+[32m+[m[32m            "Authorization": f"Bearer {self.token}",[m
+[32m+[m[32m            "Content-Type": "application/json"[m
+[32m+[m[32m        }[m
+[32m+[m[32m        data = {"UserName": self.username}[m
+[32m+[m[32m        response = requests.post(url, headers=headers, json=data)[m
+[32m+[m[32m        return response.json() if response.status_code == 200 else response.json()[m
+[1mdiff --git a/app/flight_services/models/__init__.py b/app/flight_services/models/__init__.py[m
+[1mnew file mode 100644[m
+[1mindex 0000000..e69de29[m
+[1mdiff --git a/app/flight_services/models/bdfare/__init__.py b/app/flight_services/models/bdfare/__init__.py[m
+[1mnew file mode 100644[m
+[1mindex 0000000..e69de29[m
+[1mdiff --git a/app/flight_services/models/flyhub/auth.py b/app/flight_services/models/flyhub/auth.py[m
+[1mnew file mode 100644[m
+[1mindex 0000000..b933729[m
+[1m--- /dev/null[m
+[1m+++ b/app/flight_services/models/flyhub/auth.py[m
+[36m@@ -0,0 +1,13 @@[m
+[32m+[m[32mfrom pydantic import BaseModel[m
+[32m+[m
+[32m+[m[32mclass AuthRequest(BaseModel):[m
+[32m+[m[32m    username: str[m
+[32m+[m[32m    apikey: str[m
+[32m+[m
+[32m+[m[32mclass AuthResponse(BaseModel):[m
+[32m+[m[32m    FirstName: str[m
+[32m+[m[32m    LastName: str[m
+[32m+[m[32m    Email: str[m
+[32m+[m[32m    TokenId: str[m
+[32m+[m[32m    Status: int[m
+[32m+[m[32m    Error: str = None[m
+\ No newline at end of file[m
+[1mdiff --git a/app/flight_services/models/flyhub/balance.py b/app/flight_services/models/flyhub/balance.py[m
+[1mnew file mode 100644[m
+[1mindex 0000000..b28cdf2[m
+[1m--- /dev/null[m
+[1m+++ b/app/flight_services/models/flyhub/balance.py[m
+[36m@@ -0,0 +1,8 @@[m
+[32m+[m[32mfrom pydantic import BaseModel[m
+[32m+[m[32mfrom typing import Optional, Dict[m
+[32m+[m
+[32m+[m[32mclass BalanceResponse(BaseModel):[m
+[32m+[m[32m    Balance: float[m
+[32m+[m[32m    Credits: float[m
+[32m+[m[32m    Status: str[m
+[32m+[m[32m    Error: Optional[Dict[str, str]] = None[m
+[1mdiff --git a/app/flight_services/routes/__init__.py b/app/flight_services/routes/__init__.py[m
+[1mnew file mode 100644[m
+[1mindex 0000000..da892b5[m
+[1m--- /dev/null[m
+[1m+++ b/app/flight_services/routes/__init__.py[m
+[36m@@ -0,0 +1,17 @@[m
+[32m+[m[32mfrom fastapi import APIRouter[m
+[32m+[m[32mfrom app.flight_services.routes.flyhub.auth import router as flyhub_auth_router[m
+[32m+[m[32mfrom app.flight_services.routes.flyhub.balance import router as flyhub_balance_router[m
+[32m+[m
+[32m+[m[32mflight_router = APIRouter()[m
+[32m+[m
+[32m+[m[32m# Include Flyhub routers under the flights section[m
+[32m+[m[32mflight_router.include_router([m
+[32m+[m[32m    flyhub_auth_router,[m[41m [m
+[32m+[m[32m    prefix="/api/flyhub/auth",[m
+[32m+[m[32m    tags=["Flights"][m
+[32m+[m[32m)[m
+[32m+[m[32mflight_router.include_router([m
+[32m+[m[32m    flyhub_balance_router,[m[41m [m
+[32m+[m[32m    prefix="/api/flyhub/balance",[m
+[32m+[m[32m    tags=["Flights"][m
+[32m+[m[32m)[m
+[1mdiff --git a/app/flight_services/routes/__pycache__/__init__.cpython-313.pyc b/app/flight_services/routes/__pycache__/__init__.cpython-313.pyc[m
+[1mnew file mode 100644[m
+[1mindex 0000000..f72c61d[m
+Binary files /dev/null and b/app/flight_services/routes/__pycache__/__init__.cpython-313.pyc differ
+[1mdiff --git a/app/flight_services/routes/bdfare/__init__.py b/app/flight_services/routes/bdfare/__init__.py[m
+[1mnew file mode 100644[m
+[1mindex 0000000..e69de29[m
+[1mdiff --git a/app/flight_services/routes/bdfare/__pycache__/__init__.cpython-313.pyc b/app/flight_services/routes/bdfare/__pycache__/__init__.cpython-313.pyc[m
+[1mnew file mode 100644[m
+[1mindex 0000000..1fae7e0[m
+Binary files /dev/null and b/app/flight_services/routes/bdfare/__pycache__/__init__.cpython-313.pyc differ
+[1mdiff --git a/app/flight_services/routes/bdfare/__pycache__/balance.cpython-313.pyc b/app/flight_services/routes/bdfare/__pycache__/balance.cpython-313.pyc[m
+[1mnew file mode 100644[m
+[1mindex 0000000..0e54647[m
+Binary files /dev/null and b/app/flight_services/routes/bdfare/__pycache__/balance.cpython-313.pyc differ
+[1mdiff --git a/app/flight_services/routes/bdfare/balance.py b/app/flight_services/routes/bdfare/balance.py[m
+[1mnew file mode 100644[m
+[1mindex 0000000..c06f6ca[m
+[1m--- /dev/null[m
+[1m+++ b/app/flight_services/routes/bdfare/balance.py[m
+[36m@@ -0,0 +1,13 @@[m
+[32m+[m[32mfrom fastapi import APIRouter, HTTPException[m
+[32m+[m[32mfrom app.flight_services.clients.bdfare_client import BDFAREClient[m
+[32m+[m
+[32m+[m[32mrouter = APIRouter()[m
+[32m+[m
+[32m+[m[32m@router.get("/balance", tags=["Flights"])[m
+[32m+[m[32masync def get_bdfare_balance():[m
+[32m+[m[32m    try:[m
+[32m+[m[32m        client = BDFAREClient()[m
+[32m+[m[32m        balance = client.get_balance()[m
+[32m+[m[32m        return balance[m
+[32m+[m[32m    except Exception as e:[m
+[32m+[m[32m        raise HTTPException(status_code=500, detail=str(e))[m
+[1mdiff --git a/app/flight_services/routes/flyhub/__init__.py b/app/flight_services/routes/flyhub/__init__.py[m
+[1mnew file mode 100644[m
+[1mindex 0000000..e69de29[m
+[1mdiff --git a/app/flight_services/routes/flyhub/__pycache__/__init__.cpython-311.pyc b/app/flight_services/routes/flyhub/__pycache__/__init__.cpython-311.pyc[m
+[1mnew file mode 100644[m
+[1mindex 0000000..8950f09[m
+Binary files /dev/null and b/app/flight_services/routes/flyhub/__pycache__/__init__.cpython-311.pyc differ
+[1mdiff --git a/app/flight_services/routes/flyhub/__pycache__/__init__.cpython-313.pyc b/app/flight_services/routes/flyhub/__pycache__/__init__.cpython-313.pyc[m
+[1mnew file mode 100644[m
+[1mindex 0000000..5926771[m
+Binary files /dev/null and b/app/flight_services/routes/flyhub/__pycache__/__init__.cpython-313.pyc differ
+[1mdiff --git a/app/flight_services/routes/flyhub/__pycache__/auth.cpython-311.pyc b/app/flight_services/routes/flyhub/__pycache__/auth.cpython-311.pyc[m
+[1mnew file mode 100644[m
+[1mindex 0000000..0277034[m
+Binary files /dev/null and b/app/flight_services/routes/flyhub/__pycache__/auth.cpython-311.pyc differ
+[1mdiff --git a/app/flight_services/routes/flyhub/__pycache__/auth.cpython-313.pyc b/app/flight_services/routes/flyhub/__pycache__/auth.cpython-313.pyc[m
+[1mnew file mode 100644[m
+[1mindex 0000000..c5e28e4[m
+Binary files /dev/null and b/app/flight_services/routes/flyhub/__pycache__/auth.cpython-313.pyc differ
+[1mdiff --git a/app/flight_services/routes/flyhub/__pycache__/balance.cpython-311.pyc b/app/flight_services/routes/flyhub/__pycache__/balance.cpython-311.pyc[m
+[1mnew file mode 100644[m
+[1mindex 0000000..4adf663[m
+Binary files /dev/null and b/app/flight_services/routes/flyhub/__pycache__/balance.cpython-311.pyc differ
+[1mdiff --git a/app/flight_services/routes/flyhub/__pycache__/balance.cpython-313.pyc b/app/flight_services/routes/flyhub/__pycache__/balance.cpython-313.pyc[m
+[1mnew file mode 100644[m
+[1mindex 0000000..654b0a0[m
+Binary files /dev/null and b/app/flight_services/routes/flyhub/__pycache__/balance.cpython-313.pyc differ
+[1mdiff --git a/app/flight_services/routes/flyhub/auth.py b/app/flight_services/routes/flyhub/auth.py[m
+[1mnew file mode 100644[m
+[1mindex 0000000..47d189b[m
+[1m--- /dev/null[m
+[1m+++ b/app/flight_services/routes/flyhub/auth.py[m
+[36m@@ -0,0 +1,35 @@[m
+[32m+[m[32mfrom fastapi import APIRouter[m
+[32m+[m[32mimport requests[m
+[32m+[m[32mimport os[m
+[32m+[m[32mfrom dotenv import load_dotenv[m
+[32m+[m
+[32m+[m[32mload_dotenv()[m
+[32m+[m
+[32m+[m[32mFLYHUB_AUTH_URL = os.getenv("FLYHUB_PRODUCTION_URL") + "auth"[m
+[32m+[m[32mFLYHUB_USERNAME = os.getenv("FLYHUB_USERNAME")[m
+[32m+[m[32mFLYHUB_API_KEY = os.getenv("FLYHUB_API_KEY")[m
+[32m+[m
+[32m+[m[32mrouter = APIRouter()[m
+[32m+[m
+[32m+[m[32mclass FlyhubAuthClient:[m
+[32m+[m[32m    def __init__(self):[m
+[32m+[m[32m        self.auth_token = None[m
+[32m+[m
+[32m+[m[32m    def authenticate(self):[m
+[32m+[m[32m        payload = {[m
+[32m+[m[32m            "username": FLYHUB_USERNAME,[m
+[32m+[m[32m            "apikey": FLYHUB_API_KEY[m
+[32m+[m[32m        }[m
+[32m+[m[32m        response = requests.post(FLYHUB_AUTH_URL, json=payload)[m
+[32m+[m[32m        response.raise_for_status()[m
+[32m+[m[32m        data = response.json()[m
+[32m+[m[32m        self.auth_token = data.get("token")[m
+[32m+[m[32m        return self.auth_token[m
+[32m+[m
+[32m+[m[32mflyhub_auth_client = FlyhubAuthClient()[m
+[32m+[m
+[32m+[m[32m@router.get("/authenticate")[m
+[32m+[m[32mdef authenticate():[m
+[32m+[m[32m    """Endpoint to authenticate with Flyhub API and return the token."""[m
+[32m+[m[32m    token = flyhub_auth_client.authenticate()[m
+[32m+[m[32m    return {"token": token}[m
+[1mdiff --git a/app/flight_services/routes/flyhub/balance.py b/app/flight_services/routes/flyhub/balance.py[m
+[1mnew file mode 100644[m
+[1mindex 0000000..81d4a60[m
+[1m--- /dev/null[m
+[1m+++ b/app/flight_services/routes/flyhub/balance.py[m
+[36m@@ -0,0 +1,13 @@[m
+[32m+[m[32mfrom fastapi import APIRouter, HTTPException[m
+[32m+[m[32mfrom app.flight_services.clients.flyhub_client import FlyhubClient[m
+[32m+[m
+[32m+[m[32mrouter = APIRouter()[m
+[32m+[m
+[32m+[m[32m@router.get("/balance", tags=["Flights"])[m
+[32m+[m[32masync def get_flyhub_balance():[m
+[32m+[m[32m    try:[m
+[32m+[m[32m        client = FlyhubClient()[m
+[32m+[m[32m        balance = client.get_balance()[m
+[32m+[m[32m        return balance[m
+[32m+[m[32m    except Exception as e:[m
+[32m+[m[32m        raise HTTPException(status_code=500, detail=str(e))[m
+[1mdiff --git a/app/holidays_services/__init__.py b/app/holidays_services/__init__.py[m
+[1mnew file mode 100644[m
+[1mindex 0000000..e69de29[m
+[1mdiff --git a/app/holidays_services/__pycache__/__init__.cpython-313.pyc b/app/holidays_services/__pycache__/__init__.cpython-313.pyc[m
+[1mnew file mode 100644[m
+[1mindex 0000000..5b1453e[m
+Binary files /dev/null and b/app/holidays_services/__pycache__/__init__.cpython-313.pyc differ
+[1mdiff --git a/app/holidays_services/__pycache__/models.cpython-313.pyc b/app/holidays_services/__pycache__/models.cpython-313.pyc[m
+[1mnew file mode 100644[m
+[1mindex 0000000..7243b32[m
+Binary files /dev/null and b/app/holidays_services/__pycache__/models.cpython-313.pyc differ
+[1mdiff --git a/app/holidays_services/__pycache__/routes.cpython-313.pyc b/app/holidays_services/__pycache__/routes.cpython-313.pyc[m
+[1mnew file mode 100644[m
+[1mindex 0000000..2fc25fb[m
+Binary files /dev/null and b/app/holidays_services/__pycache__/routes.cpython-313.pyc differ
+[1mdiff --git a/app/holidays_services/main.py b/app/holidays_services/main.py[m
+[1mnew file mode 100644[m
+[1mindex 0000000..e69de29[m
+[1mdiff --git a/app/holidays_services/models.py b/app/holidays_services/models.py[m
+[1mnew file mode 100644[m
+[1mindex 0000000..5f01442[m
+[1m--- /dev/null[m
+[1m+++ b/app/holidays_services/models.py[m
+[36m@@ -0,0 +1,8 @@[m
+[32m+[m[32mfrom pydantic import BaseModel[m
+[32m+[m[32mfrom datetime import date[m
+[32m+[m
+[32m+[m[32mclass HolidaySearchRequest(BaseModel):[m
+[32m+[m[32m    destination: str[m
+[32m+[m[32m    start_date: date[m
+[32m+[m[32m    end_date: date[m
+[32m+[m[32m    budget: float[m
+[1mdiff --git a/app/holidays_services/routes.py b/app/holidays_services/routes.py[m
+[1mnew file mode 100644[m
+[1mindex 0000000..c866691[m
+[1m--- /dev/null[m
+[1m+++ b/app/holidays_services/routes.py[m
+[36m@@ -0,0 +1,14 @@[m
+[32m+[m[32mfrom fastapi import APIRouter, Query[m
+[32m+[m[32mfrom .models import HolidaySearchRequest[m
+[32m+[m
+[32m+[m[32mholiday_router = APIRouter()[m
+[32m+[m
+[32m+[m[32m@holiday_router.get("/search")[m
+[32m+[m[32mdef search_holidays(destination: str = Query(...), start_date: str = Query(...), end_date: str = Query(...), budget: float = Query(...)):[m
+[32m+[m[32m    # Placeholder for holiday package search logic[m
+[32m+[m[32m    return {"message": "Holiday package search results", "destination": destination, "start_date": start_date, "end_date": end_date, "budget": budget}[m
+[32m+[m
+[32m+[m[32m@holiday_router.get("/{package_id}")[m
+[32m+[m[32mdef get_holiday_package_details(package_id: int):[m
+[32m+[m[32m    # Placeholder for retrieving holiday package details[m
+[32m+[m[32m    return {"message": "Holiday package details", "package_id": package_id}[m
+[1mdiff --git a/app/hotel_services/__init__.py b/app/hotel_services/__init__.py[m
+[1mnew file mode 100644[m
+[1mindex 0000000..e69de29[m
+[1mdiff --git a/app/hotel_services/__pycache__/__init__.cpython-313.pyc b/app/hotel_services/__pycache__/__init__.cpython-313.pyc[m
+[1mnew file mode 100644[m
+[1mindex 0000000..18aaa6b[m
+Binary files /dev/null and b/app/hotel_services/__pycache__/__init__.cpython-313.pyc differ
+[1mdiff --git a/app/hotel_services/__pycache__/models.cpython-313.pyc b/app/hotel_services/__pycache__/models.cpython-313.pyc[m
+[1mnew file mode 100644[m
+[1mindex 0000000..1a2c6f9[m
+Binary files /dev/null and b/app/hotel_services/__pycache__/models.cpython-313.pyc differ
+[1mdiff --git a/app/hotel_services/__pycache__/routes.cpython-313.pyc b/app/hotel_services/__pycache__/routes.cpython-313.pyc[m
+[1mnew file mode 100644[m
+[1mindex 0000000..ed96e83[m
+Binary files /dev/null and b/app/hotel_services/__pycache__/routes.cpython-313.pyc differ
+[1mdiff --git a/app/hotel_services/main.py b/app/hotel_services/main.py[m
+[1mnew file mode 100644[m
+[1mindex 0000000..e69de29[m
+[1mdiff --git a/app/hotel_services/models.py b/app/hotel_services/models.py[m
+[1mnew file mode 100644[m
+[1mindex 0000000..3c3101a[m
+[1m--- /dev/null[m
+[1m+++ b/app/hotel_services/models.py[m
+[36m@@ -0,0 +1,9 @@[m
+[32m+[m[32mfrom pydantic import BaseModel[m
+[32m+[m[32mfrom datetime import date[m
+[32m+[m
+[32m+[m[32mclass HotelSearchRequest(BaseModel):[m
+[32m+[m[32m    location: str[m
+[32m+[m[32m    check_in: date[m
+[32m+[m[32m    check_out: date[m
+[32m+[m[32m    guests: int[m
+[32m+[m
+[1mdiff --git a/app/hotel_services/routes.py b/app/hotel_services/routes.py[m
+[1mnew file mode 100644[m
+[1mindex 0000000..1107116[m
+[1m--- /dev/null[m
+[1m+++ b/app/hotel_services/routes.py[m
+[36m@@ -0,0 +1,15 @@[m
+[32m+[m[32mfrom fastapi import APIRouter, Query[m
+[32m+[m[32mfrom .models import HotelSearchRequest[m
+[32m+[m
+[32m+[m[32mhotel_router = APIRouter()[m
+[32m+[m
+[32m+[m[32m@hotel_router.get("/search")[m
+[32m+[m[32mdef search_hotels(location: str = Query(...), check_in: str = Query(...), check_out: str = Query(...), guests: int = Query(...)):[m
+[32m+[m[32m    # Placeholder for hotel search logic[m
+[32m+[m[32m    return {"message": "Hotel search results", "location": location, "check_in": check_in, "check_out": check_out, "guests": guests}[m
+[32m+[m
+[32m+[m[32m@hotel_router.get("/{hotel_id}")[m
+[32m+[m[32mdef get_hotel_details(hotel_id: int):[m
+[32m+[m[32m    # Placeholder for retrieving hotel details[m
+[32m+[m[32m    return {"message": "Hotel details", "hotel_id": hotel_id}[m
+[32m+[m
+[1mdiff --git a/app/insurance_services/__init__.py b/app/insurance_services/__init__.py[m
+[1mnew file mode 100644[m
+[1mindex 0000000..e69de29[m
+[1mdiff --git a/app/insurance_services/__pycache__/__init__.cpython-313.pyc b/app/insurance_services/__pycache__/__init__.cpython-313.pyc[m
+[1mnew file mode 100644[m
+[1mindex 0000000..c83a69a[m
+Binary files /dev/null and b/app/insurance_services/__pycache__/__init__.cpython-313.pyc differ
+[1mdiff --git a/app/insurance_services/__pycache__/models.cpython-313.pyc b/app/insurance_services/__pycache__/models.cpython-313.pyc[m
+[1mnew file mode 100644[m
+[1mindex 0000000..6087fff[m
+Binary files /dev/null and b/app/insurance_services/__pycache__/models.cpython-313.pyc differ
+[1mdiff --git a/app/insurance_services/__pycache__/routes.cpython-313.pyc b/app/insurance_services/__pycache__/routes.cpython-313.pyc[m
+[1mnew file mode 100644[m
+[1mindex 0000000..cc057ce[m
+Binary files /dev/null and b/app/insurance_services/__pycache__/routes.cpython-313.pyc differ
+[1mdiff --git a/app/insurance_services/main.py b/app/insurance_services/main.py[m
+[1mnew file mode 100644[m
+[1mindex 0000000..e69de29[m
+[1mdiff --git a/app/insurance_services/models.py b/app/insurance_services/models.py[m
+[1mnew file mode 100644[m
+[1mindex 0000000..5f4c07a[m
+[1m--- /dev/null[m
+[1m+++ b/app/insurance_services/models.py[m
+[36m@@ -0,0 +1,8 @@[m
+[32m+[m[32mfrom pydantic import BaseModel[m
+[32m+[m[32mfrom datetime import date[m
+[32m+[m
+[32m+[m[32mclass InsuranceRequest(BaseModel):[m
+[32m+[m[32m    coverage_type: str[m
+[32m+[m[32m    travel_start: date[m
+[32m+[m[32m    travel_end: date[m
+[32m+[m[32m    traveler_count: int[m
+[1mdiff --git a/app/insurance_services/routes.py b/app/insurance_services/routes.py[m
+[1mnew file mode 100644[m
+[1mindex 0000000..5f44026[m
+[1m--- /dev/null[m
+[1m+++ b/app/insurance_services/routes.py[m
+[36m@@ -0,0 +1,14 @@[m
+[32m+[m[32mfrom fastapi import APIRouter, Query[m
+[32m+[m[32mfrom .models import InsuranceRequest[m
+[32m+[m
+[32m+[m[32minsurance_router = APIRouter()[m
+[32m+[m
+[32m+[m[32m@insurance_router.get("/search")[m
+[32m+[m[32mdef search_insurance(coverage_type: str = Query(...), travel_start: str = Query(...), travel_end: str = Query(...), traveler_count: int = Query(...)):[m
+[32m+[m[32m    # Placeholder for insurance search logic[m
+[32m+[m[32m    return {"message": "Insurance search results", "coverage_type": coverage_type, "travel_start": travel_start, "travel_end": travel_end, "traveler_count": traveler_count}[m
+[32m+[m
+[32m+[m[32m@insurance_router.get("/{insurance_id}")[m
+[32m+[m[32mdef get_insurance_details(insurance_id: int):[m
+[32m+[m[32m    # Placeholder for retrieving insurance details[m
+[32m+[m[32m    return {"message": "Insurance details", "insurance_id": insurance_id}[m
+[1mdiff --git a/app/train_services/__pycache__/models.cpython-313.pyc b/app/train_services/__pycache__/models.cpython-313.pyc[m
+[1mnew file mode 100644[m
+[1mindex 0000000..382f63f[m
+Binary files /dev/null and b/app/train_services/__pycache__/models.cpython-313.pyc differ
+[1mdiff --git a/app/train_services/__pycache__/routes.cpython-313.pyc b/app/train_services/__pycache__/routes.cpython-313.pyc[m
+[1mnew file mode 100644[m
+[1mindex 0000000..9433c15[m
+Binary files /dev/null and b/app/train_services/__pycache__/routes.cpython-313.pyc differ
+[1mdiff --git a/app/train_services/main.py b/app/train_services/main.py[m
+[1mnew file mode 100644[m
+[1mindex 0000000..e69de29[m
+[1mdiff --git a/app/train_services/models.py b/app/train_services/models.py[m
+[1mnew file mode 100644[m
+[1mindex 0000000..8cbc3ae[m
+[1m--- /dev/null[m
+[1m+++ b/app/train_services/models.py[m
+[36m@@ -0,0 +1,7 @@[m
+[32m+[m[32mfrom pydantic import BaseModel[m
+[32m+[m[32mfrom datetime import date[m
+[32m+[m
+[32m+[m[32mclass TrainSearchRequest(BaseModel):[m
+[32m+[m[32m    origin: str[m
+[32m+[m[32m    destination: str[m
+[32m+[m[32m    travel_date: date[m
+[1mdiff --git a/app/train_services/routes.py b/app/train_services/routes.py[m
+[1mnew file mode 100644[m
+[1mindex 0000000..8d54a8e[m
+[1m--- /dev/null[m
+[1m+++ b/app/train_services/routes.py[m
+[36m@@ -0,0 +1,14 @@[m
+[32m+[m[32mfrom fastapi import APIRouter, Query[m
+[32m+[m[32mfrom .models import TrainSearchRequest[m
+[32m+[m
+[32m+[m[32mtrain_router = APIRouter()[m
+[32m+[m
+[32m+[m[32m@train_router.get("/search")[m
+[32m+[m[32mdef search_trains(origin: str = Query(...), destination: str = Query(...), travel_date: str = Query(...)):[m
+[32m+[m[32m    # Placeholder for train search logic[m
+[32m+[m[32m    return {"message": "Train search results", "origin": origin, "destination": destination, "travel_date": travel_date}[m
+[32m+[m
+[32m+[m[32m@train_router.get("/{train_id}")[m
+[32m+[m[32mdef get_train_details(train_id: int):[m
+[32m+[m[32m    # Placeholder for retrieving train details[m
+[32m+[m[32m    return {"message": "Train details", "train_id": train_id}[m
+[1mdiff --git a/baseurl.py b/baseurl.py[m
+[1mnew file mode 100644[m
+[1mindex 0000000..1ed0d7c[m
+[1m--- /dev/null[m
+[1m+++ b/baseurl.py[m
+[36m@@ -0,0 +1,3 @@[m
+[32m+[m[32mbase_url = "https://example.com"[m
+[32m+[m[32mprint(f"Base URL: {base_url}")[m
+[32m+[m
+[1mdiff --git a/config.py b/config.py[m
+[1mnew file mode 100644[m
+[1mindex 0000000..e69de29[m
+[1mdiff --git a/main.py b/main.py[m
+[1mnew file mode 100644[m
+[1mindex 0000000..723f0bc[m
+[1m--- /dev/null[m
+[1m+++ b/main.py[m
+[36m@@ -0,0 +1,32 @@[m
+[32m+[m[32mfrom fastapi import FastAPI[m
+[32m+[m[32mfrom app.flight_services.routes.flyhub import balance as flyhub_balance_routes[m
+[32m+[m[32mfrom app.flight_services.routes.bdfare import balance as bdfare_balance_routes[m
+[32m+[m[32mfrom app.hotel_services.routes import hotel_router[m
+[32m+[m[32mfrom app.bus_services.routes import bus_router[m
+[32m+[m[32mfrom app.car_services.routes import car_router[m
+[32m+[m[32mfrom app.event_services.routes import event_router[m
+[32m+[m[32mfrom app.holidays_services.routes import holiday_router[m
+[32m+[m[32mfrom app.insurance_services.routes import insurance_router[m
+[32m+[m[32mfrom app.train_services.routes import train_router[m
+[32m+[m
+[32m+[m[32mapp = FastAPI([m
+[32m+[m[32m    title="Travel API",[m
+[32m+[m[32m    version="1.0.0",[m
+[32m+[m[32m    openapi_url="/openapi.json",[m
+[32m+[m[32m    description="API for flight and travel related services"[m
+[32m+[m[32m)[m
+[32m+[m
+[32m+[m[32m# Include service routers with appropriate prefixes and tags[m
+[32m+[m[32mapp.include_router(flyhub_balance_routes.router, prefix="/api/flyhub", tags=["Flights"])[m
+[32m+[m[32mapp.include_router(bdfare_balance_routes.router, prefix="/api/bdfare", tags=["Flights"])[m
+[32m+[m[32mapp.include_router(hotel_router, prefix="/hotels", tags=["Hotels"])[m
+[32m+[m[32mapp.include_router(bus_router, prefix="/bus", tags=["Bus"])[m
+[32m+[m[32mapp.include_router(car_router, prefix="/cars", tags=["Cars"])[m
+[32m+[m[32mapp.include_router(event_router, prefix="/events", tags=["Events"])[m
+[32m+[m[32mapp.include_router(holiday_router, prefix="/holidays", tags=["Holidays"])[m
+[32m+[m[32mapp.include_router(insurance_router, prefix="/insurance", tags=["Insurance"])[m
+[32m+[m[32mapp.include_router(train_router, prefix="/trains", tags=["Trains"])[m
+[32m+[m
+[32m+[m[32m@app.get("/")[m
+[32m+[m[32mdef read_root():[m
+[32m+[m[32m    return {"message": "Welcome to the Travel API!"}[m
+[1mdiff --git a/requirements.txt b/requirements.txt[m
+[1mnew file mode 100644[m
+[1mindex 0000000..abd3f61[m
+[1m--- /dev/null[m
+[1m+++ b/requirements.txt[m
+[36m@@ -0,0 +1,6 @@[m
+[32m+[m[32mfastapi[m
+[32m+[m[32muvicorn[m
+[32m+[m[32mpydantic[m
+[32m+[m[32mhttpx[m
+[32m+[m[32mpython-dotenv[m
+[32m+[m[32mHTTPException[m
+\ No newline at end of file[m
+[1mdiff --git a/roadmap.md b/roadmap.md[m
+[1mnew file mode 100644[m
+[1mindex 0000000..e69de29[m
+[1mdiff --git a/utils.py b/utils.py[m
+[1mnew file mode 100644[m
+[1mindex 0000000..e69de29[m
