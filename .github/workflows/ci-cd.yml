@@ -1,0 +1,54 @@
+name: Deploy FastAPI to AWS EC2
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Deploy to EC2
+        env:
+          HOST: ec2-13-215-182-72.ap-southeast-1.compute.amazonaws.com
+          KEY: ${{ secrets.EC2_KEY }}
+          USER: ubuntu
+        run: |
+          echo "$KEY" > api.pem
+          chmod 400 api.pem
+
+          ssh -o StrictHostKeyChecking=no -i api.pem $USER@$HOST << 'EOF'
+          # Navigate to the project directory
+          cd /home/ubuntu/travelapi
+
+          # Ensure the repository is clean before pulling changes
+          git reset --hard
+          git clean -fd
+
+          # Pull the latest changes and handle divergent branches
+          git fetch origin main
+          git merge --strategy-option=theirs origin/main || git pull origin main --rebase || git pull origin main --merge
+
+          # Activate the virtual environment and install dependencies
+          source venv/bin/activate
+          pip install -r requirements.txt
+
+          # Stop the existing Gunicorn service if running
+          sudo systemctl stop gunicorn || true
+
+          # Start Gunicorn via systemd
+          sudo systemctl start gunicorn
+
+          # Enable Gunicorn to start on boot
+          sudo systemctl enable gunicorn
+          EOF

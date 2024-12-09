@@ -1,0 +1,44 @@
+# Python bytecode
+__pycache__/
+*.py[cod]
+
+# Virtual environments
+venv/
+env/
+*.egg-info/
+*.egg
+
+# Logs
+*.log
+*.out
+*.err
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# IDE-specific files
+.idea/
+.vscode/
+*.swp
+
+# Environment variables file
+.env
+
+# Gunicorn socket files
+*.sock
+
+# Nginx and systemd logs
+logs/
+*.pid
+*.state
+
+# pytest cache
+.cache/
+
+# Build files
+build/
+dist/
+*.spec
+*.tar.gz
+*.zip
